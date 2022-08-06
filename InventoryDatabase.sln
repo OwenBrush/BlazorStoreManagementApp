@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InventoryDatabase.WebApp", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InventoryDatabase.UseCases", "InventoryDatabase.UseCases\InventoryDatabase.UseCases.csproj", "{E52B0BF3-98E0-42AC-AA3B-38059CC552D1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InventoryDatabase.CoreEntities", "InventoryDatabase.CoreEntities\InventoryDatabase.CoreEntities.csproj", "{7F97D1F1-80EA-49D1-B6FA-577FE5E8481B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{E52B0BF3-98E0-42AC-AA3B-38059CC552D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E52B0BF3-98E0-42AC-AA3B-38059CC552D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E52B0BF3-98E0-42AC-AA3B-38059CC552D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F97D1F1-80EA-49D1-B6FA-577FE5E8481B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F97D1F1-80EA-49D1-B6FA-577FE5E8481B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F97D1F1-80EA-49D1-B6FA-577FE5E8481B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F97D1F1-80EA-49D1-B6FA-577FE5E8481B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
