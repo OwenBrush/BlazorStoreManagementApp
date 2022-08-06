@@ -1,4 +1,5 @@
 ﻿using InventoryDatabase.CoreEntities;
+using InventoryDatabase.UseCases.Inventories;
 using InventoryDatabase.UseCases.PluginInterfaces;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace InventoryDatabase.UseCases.Inventories
 {
-    internal class ViewInventoriesByNameUseCase
+    public class ViewInventoriesByNameUseCase : IViewInventoriesByNameUseCase
     {
         private readonly IInventoryRepository inventoryRepository;
 

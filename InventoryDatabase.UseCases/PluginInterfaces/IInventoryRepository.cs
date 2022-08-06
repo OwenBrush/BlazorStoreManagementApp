@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace InventoryDatabase.UseCases.PluginInterfaces
 {
-    internal interface IInventoryRepository
+    public interface IInventoryRepository
     {
         Task<IEnumerable<Inventory>> GetInventoriesByNameAsync(string name);
     }

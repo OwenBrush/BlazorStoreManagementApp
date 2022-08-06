@@ -1,3 +1,6 @@
+using InventoryDatabase.Plugins.InMemory;
+using InventoryDatabase.UseCases.Inventories;
+using InventoryDatabase.UseCases.PluginInterfaces;
 using InventoryDatabase.WebApp.Data;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
@@ -8,6 +11,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<WeatherForecastService>();
+
+builder.Services.AddSingleton<IInventoryRepository, InventoryRepository>();
+
+builder.Services.AddTransient<IViewInventoriesByNameUseCase, ViewInventoriesByNameUseCase>();
 
 var app = builder.Build();
 

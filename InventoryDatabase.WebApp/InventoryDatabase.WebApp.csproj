@@ -6,4 +6,10 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\InventoryDatabase.CoreEntities\InventoryDatabase.CoreEntities.csproj" />
+    <ProjectReference Include="..\InventoryDatabase.Plugins\InventoryDatabase.Plugins.InMemory\InventoryDatabase.Plugins.InMemory.csproj" />
+    <ProjectReference Include="..\InventoryDatabase.UseCases\InventoryDatabase.UseCases.csproj" />
+  </ItemGroup>
+
 </Project>
