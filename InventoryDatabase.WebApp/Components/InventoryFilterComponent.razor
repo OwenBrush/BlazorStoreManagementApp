@@ -1,0 +1,34 @@
+﻿
+<div class="input-group">
+	<input	@oninput="NameFilterInput"
+			@bind="nameToFilter"
+			type="text"
+			class="form-control"
+			placeholder="Filter by Name" 
+	/>
+	<button @onclick="NameFilterClear"
+			type="button" 
+			class="btn-dark input-group-text">		
+			Clear
+	</button>
+</div>
+
+@code {
+	private string nameToFilter = string.Empty;
+
+	[Parameter]
+	public EventCallback<string> OnNameFilterChange { get; set; }
+
+	private void NameFilterClear()
+	{
+		nameToFilter = string.Empty;
+		OnNameFilterChange.InvokeAsync(nameToFilter);
+	}
+
+	private void NameFilterInput(ChangeEventArgs e)
+	{
+		nameToFilter = e.Value.ToString();
+		OnNameFilterChange.InvokeAsync(nameToFilter);
+	}
+
+}
