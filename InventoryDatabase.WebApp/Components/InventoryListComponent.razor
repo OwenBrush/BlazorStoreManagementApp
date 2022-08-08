@@ -10,6 +10,9 @@
 		</tr>
 	</thead>
 	<tbody>
+		<InventoryFilterComponent
+			OnNameFilterChange="OnNameFilterChange">
+		</InventoryFilterComponent>
 		@foreach(var inv in listInventories)
 		{
 			<tr>
@@ -32,9 +35,12 @@
 
 	[Parameter]
 	public string NameFilter { get; set; } = string.Empty;
-
-	protected override async Task OnParametersSetAsync()
+	
+	private async Task OnNameFilterChange(string nameFilter)
 	{
+		this.NameFilter = nameFilter;
 		listInventories = (await ViewInventoriesByNameUseCase.ExecuteAsync(this.NameFilter)).ToList();
 	}
+
+	
 }

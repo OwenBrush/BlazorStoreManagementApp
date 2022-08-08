@@ -2,18 +2,9 @@
 
 <h3>InventoryList</h3>
 <br/>
-<InventoryFilterComponent
-	OnNameFilterChange="OnNameFilterChange">
-</InventoryFilterComponent>
 <br />
-<InventoryListComponent
-	NameFilter="@nameFilter">
+<InventoryListComponent>
 </InventoryListComponent>
 @code {
 
-	private string nameFilter = String.Empty;
-	private void OnNameFilterChange(string nameFilter)
-	{
-		this.nameFilter = nameFilter;
-	}
 }

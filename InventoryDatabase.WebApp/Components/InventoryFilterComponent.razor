@@ -1,17 +1,46 @@
 ﻿
-<div class="input-group">
-	<input	@oninput="NameFilterInput"
-			@bind="nameToFilter"
-			type="text"
-			class="form-control"
-			placeholder="Filter by Name" 
-	/>
-	<button @onclick="NameFilterClear"
-			type="button" 
-			class="btn-dark input-group-text">		
-			Clear
-	</button>
-</div>
+			<tr >
+				<td class="w-30">	
+					<input	@oninput="NameFilterInput"
+							@bind="nameToFilter"
+							type="text"
+							class="form-control"
+							placeholder="Filter by Name" 
+					/>
+				</td>
+				<td>
+					<div class="input-group mb-3">
+						<div class="input-group-prepend">
+							<span class="input-group-text">Min:</span>
+						</div>
+						<input type="number" class="form-control col-xs-1" placeholder="">
+						<div class="input-group-prepend">
+							<span class="input-group-text">Max:</span>
+						</div>
+						<input type="number" class="form-control col-xs-1" placeholder="">
+					</div>
+
+				</td>
+				<td>
+					<div class="input-group mb-3">
+						<div class="input-group-prepend">
+							<span class="input-group-text">Min:</span>
+						</div>
+						<input type="number" class="form-control col-xs-1" placeholder="">
+						<div class="input-group-prepend">
+							<span class="input-group-text">Max:</span>
+						</div>
+						<input type="number" class="form-control col-xs-1" placeholder="">
+					</div>
+				</td>
+				<td>
+					<button @onclick="NameFilterClear"
+							type="button" 
+							class="btn-dark input-group-text">		
+							Clear
+					</button>
+				</td>
+			</tr>
 
 @code {
 	private string nameToFilter = string.Empty;
