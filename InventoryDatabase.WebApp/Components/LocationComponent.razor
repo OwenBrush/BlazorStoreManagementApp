@@ -1,0 +1,22 @@
+﻿@inject ILocationRepository LocationRepository
+@page "/location/{locationID:int}"
+
+@location.LocationName
+
+<InventoryListComponent
+	inventories=location.LocationInventories>
+	
+</InventoryListComponent>
+
+@code {
+	[Parameter]
+	public int locationID { get; set; } = 0;
+
+	private Location location = new Location();
+
+	protected override async Task OnParametersSetAsync()
+	{
+		location = await LocationRepository.GetLocationByIDAsync(locationID);
+	}
+	
+}

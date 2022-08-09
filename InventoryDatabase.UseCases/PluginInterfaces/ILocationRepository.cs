@@ -7,8 +7,11 @@ using System.Threading.Tasks;
 
 namespace InventoryDatabase.UseCases.PluginInterfaces
 {
-    public interface IInventoryRepository
+    public interface ILocationRepository
     {
-        Task<IEnumerable<Inventory>> GetInventoriesByNameAsync(string name);
+        Task<IEnumerable<Location>> GetLocationsAsync();
+        Task<Location> GetLocationByIDAsync(int id);
     }
+
+
 }

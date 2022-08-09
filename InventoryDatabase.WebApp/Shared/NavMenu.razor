@@ -1,6 +1,8 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
+﻿@inject ILocationRepository LocationRepository
+
+<div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
-        <a class="navbar-brand" href="">InventoryDatabase.WebApp</a>
+        <a class="navbar-brand" href="">Warehouse Manager</a>
         <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -11,18 +13,32 @@
     <nav class="flex-column">
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="oi oi-home" aria-hidden="true"></span> Home
+                <span class="oi oi-home" aria-hidden="true"></span>
+                Home
             </NavLink>
         </div>
+        @foreach(var loc in locations)
+        {
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href=@("location/"+loc.LocationID)>
+                <span class="oi oi-plus" aria-hidden="true"></span> 
+                @loc.LocationName
+            </NavLink>
+        </div>
+        }
         <div class="nav-item px-3">
             <NavLink class="nav-link" href="inventorylist">
-                <span class="oi oi-plus" aria-hidden="true"></span> Inventory List
+                <span class="oi oi-plus" aria-hidden="true"></span> 
+                Inventory List
             </NavLink>
         </div>
     </nav>
 </div>
 
 @code {
+
+    private List<Location> locations = new List<Location>();
+
     private bool collapseNavMenu = true;
 
     private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
@@ -31,4 +47,12 @@
     {
         collapseNavMenu = !collapseNavMenu;
     }
+
+    protected override async Task OnInitializedAsync()
+	{
+		locations = (await LocationRepository.GetLocationsAsync()).ToList();
+	}
+
+
+
 }

@@ -1,4 +1,4 @@
-﻿@inject IViewInventoriesByNameUseCase ViewInventoriesByNameUseCase
+﻿@inject IFilterInventoriesUseCase FilterInventoriesUseCase
 
 <table class="table">
 	<thead>
@@ -11,14 +11,14 @@
 	</thead>
 	<tbody>
 		<InventoryFilterComponent
-			OnNameFilterChange="OnNameFilterChange">
+			OnFilterChange="OnFilterChange">
 		</InventoryFilterComponent>
-		@foreach(var inv in listInventories)
+		@foreach(var inv in inventoriesFiltered)
 		{
 			<tr>
 				<td>@inv.InventoryName</td>
-				<td>@inv.Quantity</td>
-				<td>@inv.Price</td>
+				<td class="text-center">@inv.Quantity</td>
+				<td class="text-center">@inv.Price</td>
 				<td>
 					<button 
 						type="button"
@@ -31,15 +31,20 @@
 </table>
 
 @code {
-	private List<Inventory> listInventories = new List<Inventory>();
 
 	[Parameter]
-	public string NameFilter { get; set; } = string.Empty;
-	
-	private async Task OnNameFilterChange(string nameFilter)
+	public List<Inventory> inventories { get; set; } = new List<Inventory>();
+
+	private List<Inventory> inventoriesFiltered { get; set; } = new List<Inventory>();
+
+	protected override void OnParametersSet()
 	{
-		this.NameFilter = nameFilter;
-		listInventories = (await ViewInventoriesByNameUseCase.ExecuteAsync(this.NameFilter)).ToList();
+		inventoriesFiltered = inventories;
+	}
+
+	private async Task OnFilterChange(InventoryFilter filter)
+	{
+		inventoriesFiltered = (await FilterInventoriesUseCase.ExecuteAsync(inventories, filter)).ToList();
 	}
 
 	
