@@ -1,6 +1,8 @@
 using InventoryDatabase.Plugins.InMemory;
 using InventoryDatabase.UseCases.Inventories;
 using InventoryDatabase.UseCases.Inventories.Interfaces;
+using InventoryDatabase.UseCases.Locations;
+using InventoryDatabase.UseCases.Locations.Interfaces;
 using InventoryDatabase.UseCases.PluginInterfaces;
 using InventoryDatabase.WebApp.Data;
 using Microsoft.AspNetCore.Components;
@@ -17,6 +19,10 @@ builder.Services.AddSingleton<ILocationRepository, LocationRepository>();
 
 builder.Services.AddTransient<IInventoriesFilterUseCase, InventoriesFilterUseCase>();
 builder.Services.AddTransient<IInventoriesAddUseCase, InventoriesAddUseCase>();
+builder.Services.AddTransient<IInventoriesRemoveUseCase, InventoriesRemoveUseCase>();
+builder.Services.AddTransient<ILocationsAddUseCase, LocationsAddUseCase>();
+builder.Services.AddTransient<ILocationsRemoveUseCase, LocationsRemoveUseCase>();
+
 
 var app = builder.Build();
 

@@ -4,7 +4,7 @@
 	<td class="text-center">@Inv.Price</td>
 	<td>
 		<button 
-			@onclick="OnBeginEditPressed"
+			@onclick="OnItemEditInitiatePressed"
 			type="button"
 			class="btn btn-light">
 			Edit
@@ -19,10 +19,10 @@
 	public Inventory Inv { get; set; } = new Inventory();
 
 	[Parameter]
-	public EventCallback<int> OnBeginEdit { get; set; }
+	public EventCallback<int> OnItemEditInitiate { get; set; }
 
-	private async Task OnBeginEditPressed()
+	private async Task OnItemEditInitiatePressed()
 	{
-		OnBeginEdit.InvokeAsync(ItemIndex);
+		OnItemEditInitiate.InvokeAsync(ItemIndex);
 	}
 }

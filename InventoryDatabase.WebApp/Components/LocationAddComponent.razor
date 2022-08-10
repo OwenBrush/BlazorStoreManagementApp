@@ -1,0 +1,63 @@
+﻿@page "/newLocation"
+@inject ILocationsAddUseCase LocationsAddUseCase
+@inject ILocationRepository LocationRepository
+
+<div class="input-group mb-3 w-50">
+	<div class="input-group-prepend">
+		<span class="input-group-text">Location Name:</span>
+	</div>
+
+	<input 
+			@bind="locationName"
+			type="text" 
+			class="form-control col-xs-1" 
+			placeholder="">
+</div>
+
+<div class="input-group mb-3 w-50">
+	<div class="input-group-prepend">
+		<span class="input-group-text">Location Address:</span>
+	</div>
+
+	<input 
+			@bind="locationAddress"
+			type="text" 
+			class="form-control col-xs-1" 
+			placeholder="">
+</div>
+
+<div class="input-group mb-3 w-50">
+	<button 
+			@onclick="OnLocationCreatePressed"
+			class="btn-dark input-group-text"
+			type="button">
+		Create New Location
+	</button>
+</div>
+
+@code {
+
+	private string locationName = string.Empty;
+	private string locationAddress = string.Empty;
+
+	private async Task OnLocationCreatePressed()
+	{
+		if (string.IsNullOrEmpty(locationName)) return;
+		Location newLocation = new Location
+			{
+				LocationName = locationName,
+				LocationAddress = locationAddress,
+				LocationInventories = new List<Inventory>()
+			};
+		List<Location> locationList = LocationRepository.GetLocations();
+
+		if(LocationsAddUseCase.Execute(locationList, newLocation))
+		{
+			locationName = string.Empty;
+			locationAddress = string.Empty;
+			LocationRepository.NotifyChanged();
+		}
+	}
+
+
+}

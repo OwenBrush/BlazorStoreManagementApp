@@ -3,6 +3,7 @@ using InventoryDatabase.UseCases.PluginInterfaces;
 
 namespace InventoryDatabase.Plugins.InMemory
 {
+
     public class LocationRepository : ILocationRepository
     {
         private List<Location> locations = new List<Location>();
@@ -12,7 +13,6 @@ namespace InventoryDatabase.Plugins.InMemory
             locations = new List<Location>()
             {
                 new Location   {  
-                                LocationID = 0,
                                 LocationName = "Bike Store",
                                 LocationAddress = "9000 Universe Dr. Toledo",
                                 LocationInventories = new List<Inventory>
@@ -24,7 +24,6 @@ namespace InventoryDatabase.Plugins.InMemory
                                     }
                                },
                 new Location   {
-                                LocationID = 1,
                                 LocationName = "Shoe Store",
                                 LocationAddress = "383 Swampy Rd. Tadoussac",
                                 LocationInventories = new List<Inventory>
@@ -39,14 +38,21 @@ namespace InventoryDatabase.Plugins.InMemory
             };
         }
 
-        public async Task<IEnumerable<Location>> GetLocationsAsync()
+        public List<Location> GetLocations()
         {
             return  locations;
         }
 
-        public async Task<Location> GetLocationByIDAsync(int id)
+        public async Task<Location> GetLocationByIndexAsync(int id)
         {
-           return locations[id];
+            return await Task.FromResult(locations[id]);
         }
+
+        public event EventHandler<EventArgs> OnChanged;
+        public void NotifyChanged()
+        {
+            OnChanged?.Invoke(this, EventArgs.Empty);
+        }
+
     }
 }

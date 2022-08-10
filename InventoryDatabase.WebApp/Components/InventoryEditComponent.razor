@@ -1,4 +1,5 @@
 ﻿@inject IInventoriesAddUseCase InventoriesAddUseCase
+@inject IInventoriesRemoveUseCase InventoriesRemoveUseCase 
 <tr >
 				<td>	
 					<input	
@@ -45,18 +46,44 @@
 	public List<Inventory> InventoryList { get; set; } = new List<Inventory>();
 
 	[Parameter]
-	public Inventory Inv { get; set; } = new Inventory();
+	public Inventory Inv { get; set; } = new Inventory(string.Empty);
 
 	[Parameter]
 	public EventCallback<int> OnItemEdit { get; set; }
 
+	[Parameter]
+	public EventCallback<int> OnItemDelete { get; set; }
+
 	private async Task OnItemEditPressed()
 	{
-		if(InventoriesAddUseCase.Execute(InventoryList, Inv))
+
+		async Task EditItem()
 		{
-			Inv = new Inventory();
+			if(InventoriesAddUseCase.Execute(InventoryList, Inv))
+			{
+				Inv = new Inventory(string.Empty);
+
+			}
+			await OnItemEdit.InvokeAsync(ItemIndex);
 		}
-		await OnItemEdit.InvokeAsync(ItemIndex);
+
+		async Task DeleteItem()
+		{
+			await Task.FromResult(InventoriesRemoveUseCase.Execute(InventoryList, Inv));
+			await OnItemDelete.InvokeAsync(ItemIndex);
+
+		}
+
+		if (string.IsNullOrEmpty(Inv.InventoryName))
+		{
+			await DeleteItem();
+		}
+		else
+		{
+			await EditItem();
+		}
+
+
 	}
 	
 

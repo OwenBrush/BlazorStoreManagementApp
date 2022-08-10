@@ -1,6 +1,8 @@
 ﻿@inject ILocationRepository LocationRepository
 @page "/location/{locationID:int}"
 
+@if(!deleted)
+{
 <h1>@location.LocationName</h1>
 <h6>@location.LocationAddress</h6>
 <br />
@@ -9,15 +11,29 @@
 	
 </InventoryListComponent>
 
+<LocationRemoveComponent
+	location="location"
+	OnLocationDelete="OnLocationDelete">
+</LocationRemoveComponent>
+}
+@if(deleted)
+{
+<h1>Location Deleted</h1>
+}
+
 @code {
 	[Parameter]
 	public int locationID { get; set; } = 0;
 
+	private bool deleted = false;
 	private Location location = new Location();
 
 	protected override async Task OnParametersSetAsync()
 	{
-		location = await LocationRepository.GetLocationByIDAsync(locationID);
+		location = await LocationRepository.GetLocationByIndexAsync(locationID);
 	}
-	
+	private async Task OnLocationDelete()
+	{
+		deleted = true;
+	}
 }

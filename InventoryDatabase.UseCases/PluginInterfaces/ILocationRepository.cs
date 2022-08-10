@@ -9,9 +9,13 @@ namespace InventoryDatabase.UseCases.PluginInterfaces
 {
     public interface ILocationRepository
     {
-        Task<IEnumerable<Location>> GetLocationsAsync();
-        Task<Location> GetLocationByIDAsync(int id);
+        List<Location> GetLocations();
+        Task<Location> GetLocationByIndexAsync(int index);
+
+        event EventHandler<EventArgs> OnChanged;
+        void NotifyChanged();
     }
+
 
 
 }

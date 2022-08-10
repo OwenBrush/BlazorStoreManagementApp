@@ -1,0 +1,40 @@
+﻿@inject ILocationsRemoveUseCase LocationRemoveUseCase
+@inject ILocationRepository LocationRepository
+
+					<div class="input-group mb-3 w-25">
+
+						<input 
+								@bind="confirmationText"
+								type="text" 
+								class="form-control col-xs-1" 
+								placeholder="Type Location Name to Confirm">
+
+						<button 
+							@onclick="OnLocationDeletePressed"
+							class="btn btn-outline-danger">
+							Delete Location
+						</button>
+					</div>
+	@location.LocationName
+
+@code {
+	[Parameter]
+	public Location location { get; set; } =  new Location();
+
+	private string confirmationText = string.Empty;
+	[Parameter]
+	public EventCallback OnLocationDelete { get; set; }
+
+	private void OnLocationDeletePressed()
+	{
+		if(confirmationText == location.LocationName)
+		{
+			List<Location> locationList = LocationRepository.GetLocations();
+			LocationRemoveUseCase.Execute(locationList, location);
+			LocationRepository.NotifyChanged();
+			OnLocationDelete.InvokeAsync();
+		}
+	}
+
+
+}

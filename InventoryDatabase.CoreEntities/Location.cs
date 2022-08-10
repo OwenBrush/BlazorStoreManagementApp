@@ -9,8 +9,6 @@ namespace InventoryDatabase.CoreEntities
     public class Location
     {
 
-        public int LocationID { get; set; }
-
         public string LocationName { get; set; } = string.Empty;
 
         public string LocationAddress { get; set; } = string.Empty;

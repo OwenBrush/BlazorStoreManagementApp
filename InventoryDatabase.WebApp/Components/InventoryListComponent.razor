@@ -21,6 +21,7 @@
 				{
 					<InventoryEditComponent
 						OnItemEdit="OnItemEdit"
+						OnItemDelete="OnItemDelete"
 						ItemIndex="index"
 						InventoryList="inventories"
 						Inv = "inventories[index]">
@@ -30,7 +31,8 @@
 				{
 					<InventoryItemComponent
 						ItemIndex="index"
-						Inv = "inventories[index]">
+						Inv = "inventories[index]"
+						OnItemEditInitiate="OnItemEditInitiate">
 					</InventoryItemComponent>
 				}
 
@@ -53,6 +55,15 @@
 	private List<Inventory> inventoriesFiltered { get; set; } = new List<Inventory>();
 
 	private List<int> indexToEdit { get; set; } = new List<int>();
+
+
+	private async Task OnItemEditInitiate(int index)
+	{
+		if (indexToEdit.Contains(index)) return;
+		indexToEdit.Add(index);
+	}
+
+
 	private async Task OnFilterChange(InventoryFilter filter)
 	{
 		inventoriesFiltered = (await FilterInventoriesUseCase.ExecuteAsync(inventories, filter)).ToList();
@@ -60,14 +71,19 @@
 
 	}
 
-	private void OnItemEdit(int index)
+	private async Task OnItemEdit(int index)
 	{
 		if(indexToEdit.Contains(index))
 		{
 			var itemToRemove = indexToEdit.Single(r => r == index);
 			indexToEdit.Remove(itemToRemove);			
 		}
-		StateHasChanged();
+
+	}
+
+	private async Task OnItemDelete(int index)
+	{
+		indexToEdit.Remove(index);
 	}
 
 	
