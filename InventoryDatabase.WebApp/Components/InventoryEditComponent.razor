@@ -1,0 +1,65 @@
+﻿@inject IInventoriesAddUseCase InventoriesAddUseCase
+<tr >
+				<td>	
+					<input	
+							
+							type="text"
+							class="form-control"
+							placeholder="@Inv.InventoryName"
+							@bind=Inv.InventoryName
+					/>
+				</td>
+				<td>
+					<input	
+							
+							type="number"
+							class="form-control text-center"
+							placeholder="@Inv.Quantity" 
+							@bind=Inv.Quantity
+					/>
+				</td>
+				<td>
+					<input	
+							
+							type="number"
+							class="form-control text-center"
+							placeholder="@Inv.Price"
+							@bind=Inv.Price
+					/>
+				</td>
+				<td>
+					<button 
+							@onclick="OnItemEditPressed"
+							type="button" 
+							class="btn-dark input-group-text">		
+							Save
+					</button>
+				</td>
+			</tr>
+
+@code {
+	[Parameter]
+	public int ItemIndex { get; set; }
+
+	[Parameter]
+	public List<Inventory> InventoryList { get; set; } = new List<Inventory>();
+
+	[Parameter]
+	public Inventory Inv { get; set; } = new Inventory();
+
+	[Parameter]
+	public EventCallback<int> OnItemEdit { get; set; }
+
+	private async Task OnItemEditPressed()
+	{
+		if(InventoriesAddUseCase.Execute(InventoryList, Inv))
+		{
+			Inv = new Inventory();
+		}
+		await OnItemEdit.InvokeAsync(ItemIndex);
+	}
+	
+
+
+
+}

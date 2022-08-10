@@ -1,8 +1,9 @@
 ﻿@inject ILocationRepository LocationRepository
 @page "/location/{locationID:int}"
 
-@location.LocationName
-
+<h1>@location.LocationName</h1>
+<h6>@location.LocationAddress</h6>
+<br />
 <InventoryListComponent
 	inventories=location.LocationInventories>
 	

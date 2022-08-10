@@ -1,8 +1,8 @@
 ﻿using InventoryDatabase.CoreEntities;
 
-namespace InventoryDatabase.UseCases.Inventories
+namespace InventoryDatabase.UseCases.Inventories.Interfaces
 {
-    public interface IFilterInventoriesUseCase
+    public interface IInventoriesFilterUseCase
     {
         Task<IEnumerable<Inventory>> ExecuteAsync(List<Inventory> inventories, InventoryFilter filter);
     }

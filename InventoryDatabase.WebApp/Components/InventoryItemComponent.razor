@@ -1,0 +1,28 @@
+﻿<tr>
+	<td>@Inv.InventoryName</td>
+	<td class="text-center">@Inv.Quantity</td>
+	<td class="text-center">@Inv.Price</td>
+	<td>
+		<button 
+			@onclick="OnBeginEditPressed"
+			type="button"
+			class="btn btn-light">
+			Edit
+		</button>
+	</td>
+</tr>
+
+@code {
+	[Parameter]
+	public int ItemIndex { get; set; }
+	[Parameter]
+	public Inventory Inv { get; set; } = new Inventory();
+
+	[Parameter]
+	public EventCallback<int> OnBeginEdit { get; set; }
+
+	private async Task OnBeginEditPressed()
+	{
+		OnBeginEdit.InvokeAsync(ItemIndex);
+	}
+}

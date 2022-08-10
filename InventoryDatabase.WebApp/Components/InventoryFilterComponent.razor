@@ -1,10 +1,9 @@
 ﻿
-
-@inventoryFilter.MinimumQuantity
 			<tr >
-				<td class="w-30">	
+				<td>	
 					<input	
 							@oninput="OnNameContainsChanged"
+							@bind-value="nameContains"
 							type="text"
 							class="form-control"
 							placeholder="Filter by Name" 
@@ -18,6 +17,7 @@
 
 						<input 
 								@oninput="OnMinQuantityChange"
+								@bind-value="minQuantity"
 								min="0"
 								type="number" 
 								class="form-control col-xs-1" 
@@ -29,6 +29,7 @@
 
 						<input 
 								@oninput="OnMaxQuantityChange"
+								@bind-value="maxQuantity"
 								min="0"
 								pattern="[0-9]"
 								type="number" 
@@ -44,6 +45,7 @@
 
 						<input 
 								@oninput="OnMinPriceChange"
+								@bind-value="minPrice"
 								min="0"
 								step="1"
 								type="number" 
@@ -56,6 +58,7 @@
 
 						<input 
 								@oninput="OnMaxPriceChange"
+								@bind-value="maxPrice"
 								min="0"
 								type="number" 
 								class="form-control col-xs-1" 
@@ -63,7 +66,8 @@
 					</div>
 				</td>
 				<td>
-					<button @onclick="OnFilterClear"
+					<button 
+							@onclick="OnFilterClearPressed"
 							type="button" 
 							class="btn-dark input-group-text">		
 							Clear
@@ -75,6 +79,11 @@
 
 	private InventoryFilter inventoryFilter { get ; set; } = new InventoryFilter();
 
+	private string nameContains;
+	private string minQuantity;
+	private string maxQuantity;
+	private string minPrice;
+	private string maxPrice;
 
 	[Parameter]
 	public EventCallback<InventoryFilter> OnFilterChange { get; set; }
@@ -86,41 +95,51 @@
 
 	private async Task OnNameContainsChanged(ChangeEventArgs args )
 	{
-		if (ArgsNull(args)) return;
-		inventoryFilter.NameContains = args.Value.ToString();
+		if (args.Value is null) return;
+		this.nameContains = args.Value.ToString();
+		inventoryFilter.NameContains = nameContains;
 		await OnFilterChanged();
 	}
 
 	private async Task OnMinQuantityChange(ChangeEventArgs args )
 	{
 		if (ArgsNull(args)) return;
-		inventoryFilter.MinimumQuantity = (int)(double.Parse(args.Value.ToString()));
+		this.minQuantity = args.Value.ToString();
+		inventoryFilter.MinimumQuantity = (int)(double.Parse(minQuantity));
 		await OnFilterChanged();
 	}
 
 	private async Task OnMaxQuantityChange(ChangeEventArgs args )
 	{
 		if (ArgsNull(args)) return;
-		inventoryFilter.MaximumQuantity = (int)(double.Parse(args.Value.ToString()));
+		this.maxQuantity = args.Value.ToString();
+		inventoryFilter.MaximumQuantity = (int)(double.Parse(maxQuantity));
 		await OnFilterChanged();
 	}
 
 	private async Task OnMinPriceChange(ChangeEventArgs args)
 	{
 		if (ArgsNull(args)) return;
-		inventoryFilter.MinimumPrice = double.Parse(args.Value.ToString());
+		this.minPrice = args.Value.ToString();
+		inventoryFilter.MinimumPrice = double.Parse(minPrice);
 		await OnFilterChanged();
 	}
 
 	private async Task OnMaxPriceChange(ChangeEventArgs args)
 	{
 		if (ArgsNull(args)) return;
-		inventoryFilter.MaximumPrice = double.Parse(args.Value.ToString());
+		this.maxPrice = args.Value.ToString();
+		inventoryFilter.MaximumPrice = double.Parse(maxPrice);
 		await OnFilterChanged();
 	}
 
-	private async Task OnFilterClear()
+	private async Task OnFilterClearPressed()
 	{
+		this.nameContains = "";
+		this.minQuantity = "";
+		this.maxQuantity = "";
+		this.minPrice = "";
+		this.maxPrice = "";
 		inventoryFilter = new InventoryFilter();
 		await OnFilterChanged();
 	}

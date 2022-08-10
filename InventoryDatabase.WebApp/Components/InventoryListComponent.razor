@@ -1,11 +1,11 @@
-﻿@inject IFilterInventoriesUseCase FilterInventoriesUseCase
+﻿@inject IInventoriesFilterUseCase FilterInventoriesUseCase
 
 <table class="table">
 	<thead>
 		<tr>
 			<th>Name</th>
-			<th>Quantity</th>
-			<th>Price</th>
+			<th class="text-center">Quantity</th>
+			<th class="text-center">Price</th>
 			<th>Edit</th>
 		</tr>
 	</thead>
@@ -13,20 +13,35 @@
 		<InventoryFilterComponent
 			OnFilterChange="OnFilterChange">
 		</InventoryFilterComponent>
-		@foreach(var inv in inventoriesFiltered)
+		@foreach(var index in Enumerable.Range(0,inventories.Count))
 		{
-			<tr>
-				<td>@inv.InventoryName</td>
-				<td class="text-center">@inv.Quantity</td>
-				<td class="text-center">@inv.Price</td>
-				<td>
-					<button 
-						type="button"
-						class="btn btn-light">
-					</button>
-				</td>
-			</tr>
+			@if(!inventoriesFiltered.Contains(inventories[index]))
+			{
+				@if(indexToEdit.Contains(index))
+				{
+					<InventoryEditComponent
+						OnItemEdit="OnItemEdit"
+						ItemIndex="index"
+						InventoryList="inventories"
+						Inv = "inventories[index]">
+					</InventoryEditComponent>
+				}
+				@if(!indexToEdit.Contains(index))
+				{
+					<InventoryItemComponent
+						ItemIndex="index"
+						Inv = "inventories[index]">
+					</InventoryItemComponent>
+				}
+
+			}
+
 		}
+		<InventoryEditComponent
+			OnItemEdit="OnItemEdit"
+			ItemIndex="inventories.Count"	
+			InventoryList="inventories">
+		</InventoryEditComponent>
 	</tbody>
 </table>
 
@@ -37,14 +52,22 @@
 
 	private List<Inventory> inventoriesFiltered { get; set; } = new List<Inventory>();
 
-	protected override void OnParametersSet()
-	{
-		inventoriesFiltered = inventories;
-	}
-
+	private List<int> indexToEdit { get; set; } = new List<int>();
 	private async Task OnFilterChange(InventoryFilter filter)
 	{
 		inventoriesFiltered = (await FilterInventoriesUseCase.ExecuteAsync(inventories, filter)).ToList();
+		indexToEdit = new List<int>();
+
+	}
+
+	private void OnItemEdit(int index)
+	{
+		if(indexToEdit.Contains(index))
+		{
+			var itemToRemove = indexToEdit.Single(r => r == index);
+			indexToEdit.Remove(itemToRemove);			
+		}
+		StateHasChanged();
 	}
 
 	
